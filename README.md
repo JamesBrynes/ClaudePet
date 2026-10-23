@@ -1,2 +1,135 @@
-# ClaudePet
-Pet for Claude Desktop App
+<div align="center">
+
+# Claude Pet · Claude 额度桌宠
+
+**一只住在桌面角落、帮你盯着 Claude 订阅额度的小桌宠。**
+**A tiny desktop pet that keeps an eye on your Claude plan usage.**
+
+![platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS-orange)
+![electron](https://img.shields.io/badge/Electron-45-47848f)
+![license](https://img.shields.io/badge/license-MIT-green)
+
+[中文](#中文) · [English](#english)
+
+![preview](docs/preview.png)
+
+</div>
+
+---
+
+## 中文
+
+### 它能做什么
+
+**看额度**
+- 两个圆环显示 **五小时额度** 和 **周额度**，附带重置倒计时；数字滚动，颜色随用量从橙变红
+- 用量越高小人越慌：≥80% 冒汗，≥95% 发抖；拿不到数据头上冒问号
+- 五小时到 80% / 95%、本周到 75% / 90% 时弹系统通知
+- Windows 托盘里是带圆环的小头像，Mac 菜单栏里直接显示 `37% · 18%`
+
+**陪你干活**（Windows，跟随 Claude 桌面 App）
+- Claude 在思考：换成托腮立绘，头边冒想法云，头顶飞过小字
+- Claude 在跑命令：换成看电脑立绘，左下角出现笔记本，往外冒代码符号
+- 一轮回答结束：彩纸礼花 + 「叮叮叮」
+
+**桌宠日常**
+- 摸头（点头顶）：Q 弹 + 冒爱心
+- 点身体：展开 / 收起额度气泡；点气泡：说一句随用量变化的台词
+- 拖到屏幕边自动吸附，贴左边时整体镜像
+- 电脑 1 分钟没操作就打瞌睡（换睡觉立绘、Zzz、鼻涕泡），一动鼠标就醒
+- 透明区域鼠标直接穿透，不挡你操作
+- 中英双语，默认跟随系统
+
+### 安装
+
+**Windows（免安装）**：到 [Releases](../../releases) 下载 `Claude-Pet-win-x64.zip`，解压后运行 `Claude Pet.exe`。
+程序没有签名，如果弹出「Windows 已保护你的电脑」，点「更多信息 → 仍要运行」。
+
+**从源码运行（Windows / macOS）**，需要 Node.js 18+：
+
+```bash
+git clone https://github.com/<你的用户名>/Claude_Pet.git
+cd Claude_Pet
+npm install
+npm start
+```
+
+打包：`npm run dist:win`（Windows zip，在 Mac / Linux 上也能打）· `npm run dist`（Mac .app）
+
+### 数据从哪来
+
+两种方式任选，默认自动：先试 A，不行再用 B。
+
+| | A · Claude Code 登录信息 | B · 在挂件里登录 claude.ai |
+|---|---|---|
+| 适合 | 装过并登录过 Claude Code | 只用网页版或桌面 App |
+| 配置 | 不用配置，自动读取 | 右键小人 →「登录 claude.ai…」，登录一次 |
+
+> ⚠️ 两者用的都是 **非官方内部接口**，Anthropic 改版后可能失效。接口限流很严，默认每 10 分钟刷新一次。
+> 登录凭证只加密保存在本机，只会发给 Anthropic 自己的服务器。
+
+### 「跟随 Claude」是怎么做到的
+
+Windows 上，挂件会拉起一个隐藏的 PowerShell 小助手，通过系统的 **UI Automation（无障碍接口）** 每 0.7 秒看一眼 Claude 桌面 App 的界面：出现「Stop response」按钮表示在生成，出现带 `running` 的步骤表示在思考或跑命令。全程**只读**，不点击、不修改任何东西。识别规则目前按英文界面编写。
+
+### 换角色
+
+把 `assets/` 里的图换成你自己的透明底 PNG（320×330，几张图用同样大小的原画布，切换时就不会跳位）：
+
+| 文件 | 用途 |
+|---|---|
+| `pet.png` | 平时 |
+| `pet-think.png` | 思考 |
+| `pet-work.png` | 跑命令 |
+| `pet-sleep.png` | 睡觉 |
+| `tray*.png` · `tray-head.png` | Windows 托盘头像 |
+
+---
+
+## English
+
+### Features
+
+**Usage at a glance**
+- Two ring gauges for the **5-hour** and **weekly** limits, with reset countdowns
+- The pet gets nervous as usage climbs: sweats at 80%, trembles at 95%
+- System notifications at 80% / 95% (5h) and 75% / 90% (weekly)
+- Windows tray icon with a mini ring; macOS menu bar shows `37% · 18%`
+
+**Works alongside Claude** (Windows, follows the Claude desktop app)
+- Thinking → thinking pose, thought cloud, words drifting overhead
+- Running a command → laptop pose with code glyphs popping out
+- Turn finished → confetti!
+
+**Pet things**
+- Pat her head for hearts; click her body to toggle the usage bubble
+- Snaps to screen edges and mirrors itself on the left side
+- Naps after 1 minute of inactivity, wakes up when you move the mouse
+- Click-through on transparent areas; Chinese / English UI
+
+### Install
+
+**Windows (portable)**: download `Claude-Pet-win-x64.zip` from [Releases](../../releases), unzip, run `Claude Pet.exe`.
+It's unsigned — if SmartScreen appears, click "More info → Run anyway".
+
+**From source** (Node.js 18+): `npm install && npm start`. Build with `npm run dist:win` or `npm run dist`.
+
+### Data sources
+
+- **A · Claude Code credentials** — zero config if you've logged in to Claude Code.
+- **B · claude.ai login** — right-click the pet → "Log in to claude.ai…" and sign in once inside the widget.
+
+> ⚠️ Both rely on **unofficial internal endpoints** and may break at any time. They are heavily rate-limited, so the widget refreshes every 10 minutes by default. Credentials are stored encrypted locally and only sent to Anthropic.
+
+### How "follow Claude" works
+
+On Windows, a hidden PowerShell helper reads the Claude desktop app's UI through **UI Automation** every 0.7 s ("Stop response" button = generating, steps ending in `running` = thinking or running a command). It's read-only and never clicks anything. Detection rules currently target the English UI.
+
+---
+
+## 说明 · Notes
+
+- 本项目与 Anthropic 无关，不是官方产品。Not affiliated with or endorsed by Anthropic.
+- 灵感来自 DeepSeek 小鲸鱼余额挂件。Inspired by the DeepSeek Balance Whale Widget.
+- 代码以 MIT 协议开源；角色立绘版权归作者所有，未经许可请勿另作他用。
+  Code is MIT-licensed; the character artwork belongs to its author and is not covered by the code license.
