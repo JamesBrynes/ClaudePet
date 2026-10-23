@@ -27,7 +27,7 @@
 - 五小时到 80% / 95%、本周到 75% / 90% 时弹系统通知
 - Windows 托盘里是带圆环的小头像，Mac 菜单栏里直接显示 `37% · 18%`
 
-**陪你干活**（Windows，跟随 Claude 桌面 App）
+**陪你干活**（Windows，Claude 桌面 App）
 - Claude 在思考：换成托腮立绘，头边冒想法云，头顶飞过小字
 - Claude 在跑命令：换成看电脑立绘，左下角出现笔记本，往外冒代码符号
 - 一轮回答结束：彩纸礼花 + 「叮叮叮」
@@ -56,21 +56,12 @@ npm start
 
 打包：`npm run dist:win`（Windows zip，在 Mac / Linux 上也能打）· `npm run dist`（Mac .app）
 
-### 数据从哪来
+### 连接你的 Claude 账号
 
-两种方式任选，默认自动：先试 A，不行再用 B。
+- 装过并登录过 Claude Code：不用任何设置，打开就能用。
+- 只用网页版或桌面 App：右键小人 →「登录 claude.ai…」，在弹出的窗口里登录一次即可。
 
-| | A · Claude Code 登录信息 | B · 在挂件里登录 claude.ai |
-|---|---|---|
-| 适合 | 装过并登录过 Claude Code | 只用网页版或桌面 App |
-| 配置 | 不用配置，自动读取 | 右键小人 →「登录 claude.ai…」，登录一次 |
-
-> ⚠️ 两者用的都是 **非官方内部接口**，Anthropic 改版后可能失效。接口限流很严，默认每 10 分钟刷新一次。
-> 登录凭证只加密保存在本机，只会发给 Anthropic 自己的服务器。
-
-### 「跟随 Claude」是怎么做到的
-
-Windows 上，挂件会拉起一个隐藏的 PowerShell 小助手，通过系统的 **UI Automation（无障碍接口）** 每 0.7 秒看一眼 Claude 桌面 App 的界面：出现「Stop response」按钮表示在生成，出现带 `running` 的步骤表示在思考或跑命令。全程**只读**，不点击、不修改任何东西。识别规则目前按英文界面编写。
+> 本工具依赖 Claude 的非公开功能，可能随官方更新失效。登录信息只加密保存在你自己的电脑上。
 
 ### 换角色
 
@@ -96,7 +87,7 @@ Windows 上，挂件会拉起一个隐藏的 PowerShell 小助手，通过系统
 - System notifications at 80% / 95% (5h) and 75% / 90% (weekly)
 - Windows tray icon with a mini ring; macOS menu bar shows `37% · 18%`
 
-**Works alongside Claude** (Windows, follows the Claude desktop app)
+**Works alongside Claude** (Windows, Claude desktop app)
 - Thinking → thinking pose, thought cloud, words drifting overhead
 - Running a command → laptop pose with code glyphs popping out
 - Turn finished → confetti!
@@ -114,16 +105,12 @@ It's unsigned — if SmartScreen appears, click "More info → Run anyway".
 
 **From source** (Node.js 18+): `npm install && npm start`. Build with `npm run dist:win` or `npm run dist`.
 
-### Data sources
+### Connect your Claude account
 
-- **A · Claude Code credentials** — zero config if you've logged in to Claude Code.
-- **B · claude.ai login** — right-click the pet → "Log in to claude.ai…" and sign in once inside the widget.
+- If you've logged in to Claude Code, it works out of the box.
+- Otherwise, right-click the pet → "Log in to claude.ai…" and sign in once.
 
-> ⚠️ Both rely on **unofficial internal endpoints** and may break at any time. They are heavily rate-limited, so the widget refreshes every 10 minutes by default. Credentials are stored encrypted locally and only sent to Anthropic.
-
-### How "follow Claude" works
-
-On Windows, a hidden PowerShell helper reads the Claude desktop app's UI through **UI Automation** every 0.7 s ("Stop response" button = generating, steps ending in `running` = thinking or running a command). It's read-only and never clicks anything. Detection rules currently target the English UI.
+> This tool relies on non-public Claude features and may stop working after official updates. Your login stays encrypted on your own computer.
 
 ---
 
